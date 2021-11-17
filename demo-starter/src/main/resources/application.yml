@@ -1,0 +1,46 @@
+spring:
+  application:
+    #应用的名称
+    name: demo-starter
+server:
+  port: ${PORT:8080} #应用端口号，-DPORT=7502
+
+online:
+  tools:
+    #####下面全是自定义的配置##############
+    #打印简要日志相关配置
+    mpsp:
+      #是否开启打印简要日志
+#      enabledMpsp: true
+      #是否开启生成rpid并修改线程id
+#      enabledGenerateRpid: true
+      #是否开启接口字段校验
+#      enabledValidated: true
+      #注意enabledMpsp、enabledGenerateRpid、enabledValidated 3个值可以不用配置，
+      #默认都为true，只有自己的包名和com.online.unionpaybusi.aspect.AspectPointcut中配置的不一致
+      #才需要把相应的配置修改为false并自己实现切面调用相应的MpspLogHandler、GenerateRpidHandler、ValidatedHandler处理
+      #简要日志字段
+      field: rpid,retCode,retMsg,userId,age
+
+    #通用异常处理配置
+    exception:
+      enabled: false #是否开启未捕获异常处理
+      packageName: com.online.unionpaybusi #过滤包名，如果enabled设置为true必须设置这个属性
+    #okhttp相关配置
+    okhttp:
+      #连接超时时间，单位秒
+      connectTimeout: 5
+      #读超时时间，单位秒
+      readTimeout: 35
+      #写超时时间，单位秒
+      writeTimeout: 5
+      #连接池中整体的空闲连接的最大数量
+      maxIdleConnections: 200
+      #连接空闲时间最多为 300 秒
+      keepAliveDuration: 300
+      #配置okhttp打印的日志等级，可配置，从小到大依次为
+      #NONE，无记录（DEFAULT）。
+      #BASIC，只记录请求方法和URL以及响应状态代码和执行时间。
+      #HEADERS，记录基本信息以及请求和响应头。
+      #BODY，记录请求和响应的头文件，正文和元数据
+      logLevel: BODY

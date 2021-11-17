@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/2002/xmlspec/dtd/2.10/xmlspec.dtd"> -->
+<configuration status="OFF" monitorInterval="1800">
+    <properties>
+        <!-- 基本的文件的输出信息的配置 -->
+        <property name="log.base.path">../log</property>
+        <!-- 日志输出编码格式 -->
+        <property name="charset">UTF-8</property>
+        <!-- 控制台输出pattern格式 -->
+        <property name="console_pattern">%d{yyyy-MM-dd_HH:mm:ss}[%-5level][%t]%c{1}[%L]-%m%n</property>
+        <!-- debug文件输出pattern格式，只显示类名，不打印行号 -->
+        <property name="file_debug_pattern">%d{yyyy-MM-dd_HH:mm:ss}[%-5level][%t]%c{1}-%m%n</property>
+        <!-- warn文件输出pattern格式，显示全类名，打印行号，方便排查错误 -->
+        <property name="file_warn_pattern">%d{yyyy-MM-dd_HH:mm:ss}[%-5level][%t]%c-%m%n</property>
+        <!-- mpsp文件输出pattern格式 -->
+        <property name="file_mpsp_pattern">%date{yyyyMMddHHmmss},%message%n</property>
+
+        <!-- 姓名正则匹配xml格式的报文 -->
+        <property name="regex_name_xml">(&lt;name>|&lt;username>|&lt;contact>|&lt;userName>)([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]+(&lt;/)</property>
+        <property name="replacement_name_xml">$1$2**$3</property>
+        <!-- 姓名正则匹配json格式的报文 -->
+        <property name="regex_name_json">(name|username|contact|userName)(&quot;:&quot;)([\u4E00-\u9FA5]{1})([\u4E00-\u9FA5]+)(&quot;)</property>
+        <property name="replacement_name_json">$1$2$3**$5</property>
+        <!-- 姓名正则匹配json字符串格式的报文 -->
+        <property name="regex_name_json_string">(name|username|contact|userName)(\\&quot;:\\&quot;)([\u4E00-\u9FA5]{1})([\u4E00-\u9FA5]+)(\\&quot;)</property>
+        <property name="replacement_name_json_string">$1$2$3**$5</property>
+        <!-- 姓名正则匹配toString格式的报文 -->
+        <property name="regex_name_string">(name|username|contact|userName)(=')([\u4E00-\u9FA5]{1})([\u4E00-\u9FA5]+)(')</property>
+        <property name="replacement_name_string">$1$2$3**$5</property>
+        <!-- 姓名正则匹配toString1格式的报文 -->
+        <property name="regex_name_string1">(name|username|contact|userName)(=)([\u4E00-\u9FA5]{1})([\u4E00-\u9FA5]+)(,|}|])</property>
+        <property name="replacement_name_string1">$1$2$3**$5</property>
+
+        <!-- 身份证正则匹配xml格式的报文 -->
+        <property name="regex_id_number_xml">(&lt;idNo>|&lt;idNumber>|&lt;certID>)(\d{6})\d{9}(\d{1}\w{0,3}&lt;/)
+        </property>
+        <property name="replacement_id_number_xml">$1$2*********$3</property>
+        <!-- 身份证正则匹配json格式的报文 -->
+        <property name="regex_id_number_json">(idNo|idNumber|certID)(&quot;:&quot;)(\d{6})\d{9}(\d{1}\w{0,3}&quot;)
+        </property>
+        <property name="replacement_id_number_json">$1$2$3*********$4</property>
+        <!-- 身份证正则匹配json字符串格式的报文 -->
+        <property name="regex_id_number_json_string">(idNo|idNumber|certID)(\\&quot;:\\&quot;)(\d{6})\d{9}(\d{1}\w{0,3}\\&quot;)</property>
+        <property name="replacement_id_number_json_string">$1$2$3*********$4</property>
+        <!-- 身份证正则匹配toString格式的报文 -->
+        <property name="regex_id_number_string">(idNo|idNumber|certID)(=')(\d{6})\d{9}(\d{1}\w{0,3}')</property>
+        <property name="replacement_id_number_string">$1$2$3*********$4</property>
+        <!-- 身份证正则匹配toString1格式的报文 -->
+        <property name="regex_id_number_string1">(idNo|idNumber|certID)(=)(\d{6})\d{9}(\d{1}\w{0,3})(,|}|])</property>
+        <property name="replacement_id_number_string1">$1$2$3*********$4$5</property>
+
+        <!-- 手机号正则匹配xml格式的报文 -->
+        <property name="regex_phone_xml">(&lt;mobileId>|&lt;stlContactNum>|&lt;financialModel>|&lt;mobileid>|&lt;mobileno>)(\d{3})\d{4}(\d{4}&lt;/)</property>
+        <property name="replacement_phone_xml">$1$2****$3</property>
+        <!-- 手机号正则匹配json格式的报文 -->
+        <property name="regex_phone_json">(mobileId|stlContactNum|financialModel|mobileid|mobileno)(&quot;:&quot;)(\d{3})\d{4}(\d{4}&quot;)</property>
+        <property name="replacement_phone_json">$1$2$3****$4</property>
+        <!-- 手机号正则匹配json字符串格式的报文 -->
+        <property name="regex_phone_json_string">(mobileId|stlContactNum|financialModel|mobileid|mobileno)(\\&quot;:\\&quot;)(\d{3})\d{4}(\d{4}\\&quot;)
+        </property>
+        <property name="replacement_phone_json_string">$1$2$3****$4</property>
+        <!-- 手机号正则匹配toString格式的报文 -->
+        <property name="regex_phone_string">(mobileId|stlContactNum|financialModel|mobileid|mobileno)(=')(\d{3})\d{4}(\d{4}')
+        </property>
+        <property name="replacement_phone_string">$1$2$3****$4</property>
+        <!-- 手机号正则匹配toString1格式的报文 -->
+        <property name="regex_phone_string1">(mobileId|stlContactNum|financialModel|mobileid|mobileno)(=)(\d{3})\d{4}(\d{4})(,|}|])
+        </property>
+        <property name="replacement_phone_string1">$1$2$3****$4$5</property>
+
+
+        <!-- 银行卡号正则匹配xml格式的报文 -->
+        <property name="regex_account_xml">(&lt;p_account>|&lt;g_account>|&lt;bankAccountNum>|&lt;cardid>)(\d{6})\d{6,9}(\d{4}&lt;/)</property>
+        <property name="replacement_account_xml">$1$2******$3</property>
+        <!-- 银行卡号正则匹配json格式的报文 -->
+        <property name="regex_account_json">(p_account|g_account|bankAccountNum|cardid)(&quot;:&quot;)(\d{6})\d{6,9}(\d{4}&quot;)</property>
+        <property name="replacement_account_json">$1$2$3******$4</property>
+        <!-- 银行卡号正则匹配json字符串格式的报文 -->
+        <property name="regex_account_json_string">
+            (p_account|g_account|bankAccountNum|cardid)(\\&quot;:\\&quot;)(\d{6})\d{6,9}(\d{4}\\&quot;)
+        </property>
+        <property name="replacement_account_json_string">$1$2$3******$4</property>
+        <!-- 银行卡号正则匹配toString格式的报文 -->
+        <property name="regex_account_string">
+            (p_account|g_account|bankAccountNum|cardid)(=')(\d{6})\d{6,9}(\d{4}')
+        </property>
+        <property name="replacement_account_string">$1$2$3******$4</property>
+        <!-- 银行卡号正则匹配toString1格式的报文 -->
+        <property name="regex_account_string1">
+            (p_account|g_account|bankAccountNum|cardid)(=)(\d{6})\d{6,9}(\d{4})(,|}|])
+        </property>
+        <property name="replacement_account_string1">$1$2$3******$4$5</property>
+
+        <!-- 固定电话正则匹配xml格式的报文 -->
+        <property name="regex_tel_xml">(&lt;tel>|&lt;maintainTel>)(0\d{2,3})(-)\d{5,6}(\d{2}&lt;/)</property>
+        <property name="replacement_tel_xml">$1$2$3*****$4</property>
+        <!-- 固定电话正则匹配json格式的报文 -->
+        <property name="regex_tel_json">(tel|maintainTel)(&quot;:&quot;)(0\d{2,3})(-)\d{5,6}(\d{2}&quot;)</property>
+        <property name="replacement_tel_json">$1$2$3$4****$5</property>
+        <!-- 固定电话正则匹配json字符串格式的报文 -->
+        <property name="regex_tel_json_string">(tel|maintainTel)(\\&quot;:\\&quot;)(0\d{2,3})(-)\d{5,6}(\d{2}\\&quot;)
+        </property>
+        <property name="replacement_tel_json_string">$1$2$3$4****$5</property>
+        <!-- 固定电话正则匹配toString格式的报文 -->
+        <property name="regex_tel_string">(tel|maintainTel)(=')(0\d{2,3})(-)\d{5,6}(\d{2}')
+        </property>
+        <property name="replacement_tel_string">$1$2$3$4****$5</property>
+        <!-- 固定电话正则匹配toString1格式的报文 -->
+        <property name="regex_tel_string1">(tel|maintainTel)(=)(0\d{2,3})(-)\d{5,6}(\d{2})(,|}|])
+        </property>
+        <property name="replacement_tel_string1">$1$2$3$4****$5$6</property>
+
+        <!-- 邮箱正则匹配xml格式的报文 -->
+        <property name="regex_email_xml">(&lt;email>|&lt;toAddress>)[A-Za-z0-9\u4e00-\u9fa5]+(@)([a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)(&lt;/)</property>
+        <property name="replacement_email_xml">$1******$6</property>
+        <!-- 邮箱正则匹配json格式的报文 -->
+        <property name="regex_email_json">(email|toAddress|zipCode)(&quot;:&quot;)[A-Za-z0-9\u4e00-\u9fa5]+(@)([a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)(&quot;)</property>
+        <property name="replacement_email_json">$1$2******$7</property>
+        <!-- 邮箱正则匹配json字符串格式的报文 -->
+        <property name="regex_email_json_string">(email|toAddress|zipCode)(\\&quot;:\\&quot;)[A-Za-z0-9\u4e00-\u9fa5]+(@)([a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)(\\&quot;)</property>
+        <property name="replacement_email_json_string">$1$2******$7</property>
+        <!-- 邮箱正则匹配toString格式的报文 -->
+        <property name="regex_email_string">(email|toAddress|zipCode)(=')[A-Za-z0-9\u4e00-\u9fa5]+(@)([a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+)(')</property>
+        <property name="replacement_email_string">$1$2******$6</property>
+        <!-- 邮箱正则匹配toString1格式的报文 -->
+        <property name="regex_email_string1">(email|toAddress|zipCode)(=)[A-Za-z0-9\u4e00-\u9fa5]+(@)([a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+)(,|}|])</property>
+        <property name="replacement_email_string1">$1$2******$6</property>
+
+
+        <!-- 地址正则匹配xml格式的报文 -->
+        <property name="regex_address_xml">(&lt;address>)([A-Za-z0-9\u4e00-\u9fa5]+)(&lt;/)</property>
+        <property name="replacement_address_xml">$1******$3</property>
+        <!-- 地址正则匹配json格式的报文 -->
+        <property name="regex_address_json">(address)(&quot;:&quot;)([A-Za-z0-9\u4e00-\u9fa5]+)(&quot;)</property>
+        <property name="replacement_address_json">$1$2******$4</property>
+        <!-- 地址正则匹配json字符串格式的报文 -->
+        <property name="regex_address_json_string">(address)(\\&quot;:\\&quot;)([A-Za-z0-9\u4e00-\u9fa5]+)(\\&quot;)</property>
+        <property name="replacement_address_json_string">$1$2******$4</property>
+        <!-- 地址正则匹配toString格式的报文 -->
+        <property name="regex_address_string">(address)(=')([A-Za-z0-9\u4e00-\u9fa5]+)(')</property>
+        <property name="replacement_address_string">$1$2******$4</property>
+        <!-- 地址正则匹配toString1格式的报文 -->
+        <property name="regex_address_string1">(address)(=)([A-Za-z0-9\u4e00-\u9fa5]+)(,|}|])</property>
+        <property name="replacement_address_string1">$1$2******$4</property>
+
+    </properties>
+    <appenders>
+        <console name="CONSOLE" target="SYSTEM_OUT">
+<!--            <patternLayout charset="UTF-8"-->
+<!--                           pattern="%date{yyyy-MM-dd_HH:mm:ss}[%-5level][%t]%logger[%L]-%message%n"/>-->
+            <!--注意此配置只是测试使用，正常情况控制台输出不需要脱敏-->
+            <CustomPatternLayout charset="${charset}"
+                                 pattern="${console_pattern}">
+                <replaces>
+                    <replace regex="${regex_name_xml}" replacement="${replacement_name_xml}"/>
+                    <replace regex="${regex_name_json}" replacement="${replacement_name_json}"/>
+                    <replace regex="${regex_name_json_string}" replacement="${replacement_name_json_string}"/>
+                    <replace regex="${regex_name_string}" replacement="${replacement_name_string}"/>
+                    <replace regex="${regex_name_string1}" replacement="${replacement_name_string1}"/>
+
+                    <replace regex="${regex_id_number_xml}" replacement="${replacement_id_number_xml}"/>
+                    <replace regex="${regex_id_number_json}" replacement="${replacement_id_number_json}"/>
+                    <replace regex="${regex_id_number_json_string}" replacement="${replacement_id_number_json_string}"/>
+                    <replace regex="${regex_id_number_string}" replacement="${replacement_id_number_string}"/>
+                    <replace regex="${regex_id_number_string1}" replacement="${replacement_id_number_string1}"/>
+
+                    <replace regex="${regex_phone_xml}" replacement="${replacement_phone_xml}"/>
+                    <replace regex="${regex_phone_json}" replacement="${replacement_phone_json}"/>
+                    <replace regex="${regex_phone_json_string}" replacement="${replacement_phone_json_string}"/>
+                    <replace regex="${regex_phone_string}" replacement="${replacement_phone_string}"/>
+                    <replace regex="${regex_phone_string1}" replacement="${replacement_phone_string1}"/>
+
+
+                    <replace regex="${regex_account_xml}" replacement="${replacement_account_xml}"/>
+                    <replace regex="${regex_account_json}" replacement="${replacement_account_json}"/>
+                    <replace regex="${regex_account_json_string}" replacement="${replacement_account_json_string}"/>
+                    <replace regex="${regex_account_string}" replacement="${replacement_account_string}"/>
+                    <replace regex="${regex_account_string1}" replacement="${replacement_account_string1}"/>
+
+                    <replace regex="${regex_tel_xml}" replacement="${replacement_tel_xml}"/>
+                    <replace regex="${regex_tel_json}" replacement="${replacement_tel_json}"/>
+                    <replace regex="${regex_tel_json_string}" replacement="${replacement_tel_json_string}"/>
+                    <replace regex="${regex_tel_string}" replacement="${replacement_tel_string}"/>
+                    <replace regex="${regex_tel_string1}" replacement="${replacement_tel_string1}"/>
+
+                    <replace regex="${regex_email_xml}" replacement="${replacement_email_xml}"/>
+                    <replace regex="${regex_email_json}" replacement="${replacement_email_json}"/>
+                    <replace regex="${regex_email_json_string}" replacement="${replacement_email_json_string}"/>
+                    <replace regex="${regex_email_string}" replacement="${replacement_email_string}"/>
+                    <replace regex="${regex_email_string1}" replacement="${replacement_email_string1}"/>
+
+                    <replace regex="${regex_address_xml}" replacement="${replacement_address_xml}"/>
+                    <replace regex="${regex_address_json}" replacement="${replacement_address_json}"/>
+                    <replace regex="${regex_address_json_string}" replacement="${replacement_address_json_string}"/>
+                    <replace regex="${regex_address_string}" replacement="${replacement_address_string}"/>
+                    <replace regex="${regex_address_string1}" replacement="${replacement_address_string1}"/>
+                </replaces>
+            </CustomPatternLayout>
+        </console>
+
+        <RollingFile name="ROLLINGFILE_DEBUG"
+                     fileName="${log.base.path}/platform/detail.log"
+                     filePattern="${log.base.path}/platform/detail.log.%date{yyyyMMdd}">
+            <filters>
+                <!--onMatch="ACCEPT" 表示匹配该级别及以上-->
+                <!--onMatch="DENY" 表示不匹配该级别及以上-->
+                <!--onMatch="NEUTRAL" 表示该级别及以上的，由下一个filter处理，如果当前是最后一个，则表示匹配该级别及以上-->
+                <!--onMismatch="ACCEPT" 表示匹配该级别以下-->
+                <!--onMismatch="NEUTRAL" 表示该级别及以下的，由下一个filter处理，如果当前是最后一个，则不匹配该级别以下的-->
+                <!--onMismatch="DENY" 表示不匹配该级别以下的-->
+                <thresholdFilter level="debug" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </filters>
+            <CustomPatternLayout charset="${charset}"
+                                 pattern="${file_debug_pattern}">
+                <replaces>
+                    <replace regex="${regex_name_xml}" replacement="${replacement_name_xml}"/>
+                    <replace regex="${regex_name_json}" replacement="${replacement_name_json}"/>
+                    <replace regex="${regex_name_json_string}" replacement="${replacement_name_json_string}"/>
+                    <replace regex="${regex_name_string}" replacement="${replacement_name_string}"/>
+                    <replace regex="${regex_name_string1}" replacement="${replacement_name_string1}"/>
+
+                    <replace regex="${regex_id_number_xml}" replacement="${replacement_id_number_xml}"/>
+                    <replace regex="${regex_id_number_json}" replacement="${replacement_id_number_json}"/>
+                    <replace regex="${regex_id_number_json_string}" replacement="${replacement_id_number_json_string}"/>
+                    <replace regex="${regex_id_number_string}" replacement="${replacement_id_number_string}"/>
+                    <replace regex="${regex_id_number_string1}" replacement="${replacement_id_number_string1}"/>
+
+                    <replace regex="${regex_phone_xml}" replacement="${replacement_phone_xml}"/>
+                    <replace regex="${regex_phone_json}" replacement="${replacement_phone_json}"/>
+                    <replace regex="${regex_phone_json_string}" replacement="${replacement_phone_json_string}"/>
+                    <replace regex="${regex_phone_string}" replacement="${replacement_phone_string}"/>
+                    <replace regex="${regex_phone_string1}" replacement="${replacement_phone_string1}"/>
+
+
+                    <replace regex="${regex_account_xml}" replacement="${replacement_account_xml}"/>
+                    <replace regex="${regex_account_json}" replacement="${replacement_account_json}"/>
+                    <replace regex="${regex_account_json_string}" replacement="${replacement_account_json_string}"/>
+                    <replace regex="${regex_account_string}" replacement="${replacement_account_string}"/>
+                    <replace regex="${regex_account_string1}" replacement="${replacement_account_string1}"/>
+
+                    <replace regex="${regex_tel_xml}" replacement="${replacement_tel_xml}"/>
+                    <replace regex="${regex_tel_json}" replacement="${replacement_tel_json}"/>
+                    <replace regex="${regex_tel_json_string}" replacement="${replacement_tel_json_string}"/>
+                    <replace regex="${regex_tel_string}" replacement="${replacement_tel_string}"/>
+                    <replace regex="${regex_tel_string1}" replacement="${replacement_tel_string1}"/>
+
+                    <replace regex="${regex_email_xml}" replacement="${replacement_email_xml}"/>
+                    <replace regex="${regex_email_json}" replacement="${replacement_email_json}"/>
+                    <replace regex="${regex_email_json_string}" replacement="${replacement_email_json_string}"/>
+                    <replace regex="${regex_email_string}" replacement="${replacement_email_string}"/>
+                    <replace regex="${regex_email_string1}" replacement="${replacement_email_string1}"/>
+
+                    <replace regex="${regex_address_xml}" replacement="${replacement_address_xml}"/>
+                    <replace regex="${regex_address_json}" replacement="${replacement_address_json}"/>
+                    <replace regex="${regex_address_json_string}" replacement="${replacement_address_json_string}"/>
+                    <replace regex="${regex_address_string}" replacement="${replacement_address_string}"/>
+                    <replace regex="${regex_address_string1}" replacement="${replacement_address_string1}"/>
+                </replaces>
+            </CustomPatternLayout>
+            <policies>
+                <timeBasedTriggeringPolicy/>
+            </policies>
+        </RollingFile>
+        <RollingFile name="ROLLINGFILE_WARN"
+                     fileName="${log.base.path}/error/error.log"
+                     filePattern="${log.base.path}/error/error.log.%date{yyyyMMdd}">
+            <filters>
+                <thresholdFilter level="warn" onMatch="ACCEPT"
+                                 onMismatch="DENY"/>
+            </filters>
+            <patternLayout charset="${charset}"
+                           pattern="${file_warn_pattern}"/>
+            <policies>
+                <timeBasedTriggeringPolicy/>
+            </policies>
+        </RollingFile>
+        <RollingFile name="fileMpsp" fileName="${log.base.path}/mpsp/mpsp.log"
+                     filePattern="${log.base.path}/mpsp/mpsp.log.%d{yyyy-MM-dd}">
+            <PatternLayout charset="${charset}" pattern="${mpsp_debug_pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true"
+                                           interval="1"/>
+            </Policies>
+        </RollingFile>
+        <Async name="ASYNC_DEBUG">
+            <AppenderRef ref="ROLLINGFILE_DEBUG"/>
+        </Async>
+        <Async name="ASYNC_WARN">
+            <AppenderRef ref="ROLLINGFILE_WARN"/>
+        </Async>
+        <Async name="ASYNC_MPSP">
+            <AppenderRef ref="fileMpsp"/>
+        </Async>
+    </appenders>
+    <loggers>
+        <logger name="org.springframework" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_DEBUG"/>
+            <AppenderRef ref="ASYNC_WARN"/>
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <logger name="com.online.unionpaybusi.log.LoggerPlus" level="debug" additivity="false">
+            <AppenderRef ref="ASYNC_DEBUG"/>
+            <AppenderRef ref="ASYNC_WARN"/>
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <!-- 配置onlinetools-spring-boot-starter启动器的日志打印-->
+        <logger name="com.online.base.tools" level="info" additivity="false">
+            <AppenderRef ref="ASYNC_DEBUG"/>
+            <AppenderRef ref="ASYNC_WARN"/>
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <!-- 配置okhttp的日志打印,debug级别会打印请求和响应的所有信息-->
+        <logger name="com.online.unionpaybusi.http.OKHttp3LoggingInterceptor" level="debug" additivity="false">
+            <AppenderRef ref="ASYNC_DEBUG"/>
+            <AppenderRef ref="ASYNC_WARN"/>
+            <AppenderRef ref="CONSOLE"/>
+        </logger>
+        <!-- mpsp日志级别-->
+        <logger name="mpspLogger" level="info" additivity="false">
+            <appender-ref ref="ASYNC_MPSP" />
+            <appender-ref ref="CONSOLE" />
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="ASYNC_DEBUG"/>
+            <appender-ref ref="ASYNC_WARN"/>
+            <appender-ref ref="CONSOLE"/>
+        </root>
+    </loggers>
+</configuration>
