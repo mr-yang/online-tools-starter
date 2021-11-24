@@ -42,8 +42,9 @@ public class YamlPropertySourceFactory implements PropertySourceFactory {
             logger.error("YamlPropertySourceFactory 自定义yml解析类解析异常",e);
             // for ignoreResourceNotFound
             Throwable cause = e.getCause();
-            if (cause instanceof FileNotFoundException)
+            if (cause instanceof FileNotFoundException) {
                 throw (FileNotFoundException) e.getCause();
+            }
             throw e;
         }
     }

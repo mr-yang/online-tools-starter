@@ -36,6 +36,59 @@ public class OkHttpConfig {
      */
     private String logLevel = "BODY";
 
+
+    /**
+     * 是否开启https双向验证
+     */
+    private boolean enabledHttps = false;
+
+    /**
+     * 公钥路径，cer格式
+     */
+    private String cerPath;
+    /**
+     * 私钥路径，p12格式
+     */
+    private String p12Path;
+
+    /**
+     * 私钥密码，没有可以不设置
+     */
+    private String password;
+
+
+    public boolean isEnabledHttps() {
+        return enabledHttps;
+    }
+
+    public void setEnabledHttps(boolean enabledHttps) {
+        this.enabledHttps = enabledHttps;
+    }
+
+    public String getCerPath() {
+        return cerPath;
+    }
+
+    public void setCerPath(String cerPath) {
+        this.cerPath = cerPath;
+    }
+
+    public String getP12Path() {
+        return p12Path;
+    }
+
+    public void setP12Path(String p12Path) {
+        this.p12Path = p12Path;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getConnectTimeout() {
         return connectTimeout;
     }
