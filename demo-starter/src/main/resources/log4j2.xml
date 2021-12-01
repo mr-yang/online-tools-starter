@@ -206,12 +206,13 @@
         <logger name="com.online.unionpaybusi.log.LoggerPlus" level="debug" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <!-- 配置onlinetools-spring-boot-starter启动器的日志打印-->
-        <logger name="com.online.base.tools" level="info" additivity="false">
+        <!-- 配置okhttp的日志打印,debug级别会打印请求和响应的所有信息-->
+        <logger name="com.umpay.online.tools.http.OkHttp3LoggingInterceptor" level="debug" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
-        <!-- 配置okhttp的日志打印,debug级别会打印请求和响应的所有信息-->
-        <logger name="com.online.unionpaybusi.http.OKHttp3LoggingInterceptor" level="debug" additivity="false">
+
+        <!-- 配置onlinetools-spring-boot-starter启动器的日志打印-->
+        <logger name="com.umpay.online.base.tools" level="info" additivity="false">
             <AppenderRef ref="CONSOLE"/>
         </logger>
         <!-- mpsp日志级别-->
