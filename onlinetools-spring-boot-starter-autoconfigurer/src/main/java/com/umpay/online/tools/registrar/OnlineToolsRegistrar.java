@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * @author tianxiaoyang
  * @date 2021-07-09 10:17
- * @describe 其中 `com.online.unionpaybusi`为需要扫描启动器的包，配置Registrar，自动扫描启动器下面的配置或组件
+ * @describe 配置Registrar，自动扫描启动器下面的配置或组件
  */
 public class OnlineToolsRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
