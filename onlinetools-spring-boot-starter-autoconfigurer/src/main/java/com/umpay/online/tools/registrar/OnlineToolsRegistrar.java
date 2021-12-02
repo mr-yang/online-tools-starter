@@ -17,8 +17,6 @@ import java.util.Map;
 public class OnlineToolsRegistrar implements ImportBeanDefinitionRegistrar {
     @Override
     public void registerBeanDefinitions(AnnotationMetadata metadata, BeanDefinitionRegistry registry) {
-        Map<String, Object> defaultAttrs = metadata.getAnnotationAttributes(EnableOnlineTools.class.getName(), true);
-        LoggerPlus.info(defaultAttrs);
         ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registry, true);
         //改造成自动获取上级包名
         scanner.scan("com.umpay.online.tools");
